@@ -14,7 +14,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var mDrawPath: CustomPath? = null
     private var mCanvasBitmap: Bitmap? =
         null // bitmap is rectangle of pixels, it is used to work with images defined by pixel data
-    private var mDrawPaint: Paint? = null
+    private var mDrawPaint: Paint? = null // The Paint class holds the style and color information about how to draw geometries, text and bitmaps
     private var mCanvasPaint: Paint? = null
     private var mBrushSize: Float = 0.toFloat()
     private var color = Color.BLACK
@@ -31,13 +31,17 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private fun setUpDrawing() {
         mDrawPaint = Paint()
         mDrawPath = CustomPath(color, mBrushSize)
+
         mDrawPaint!!.color = color
+
         mDrawPaint!!.style = Paint.Style.STROKE
         mDrawPaint!!.strokeJoin = Paint.Join.ROUND
         mDrawPaint!!.strokeCap = Paint.Cap.ROUND
+
         mCanvasPaint = Paint(Paint.DITHER_FLAG)
         //mBrushSize = 20.toFloat(), now we can set the size from the mainactivity
     }
+
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -45,11 +49,17 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         canvas = Canvas(mCanvasBitmap!!)
     }
 
+    /**
+     * This method is called when a stroke is drawn on the canvas
+     * as a part of the painting.
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        canvas?.drawBitmap(mCanvasBitmap!!, 0f, 0f, mCanvasPaint)
+        mCanvasBitmap?.let {
+            canvas?.drawBitmap(it, 0f, 0f, mCanvasPaint)
+        }
         for (path in mPaths) {
-            mDrawPaint!!.strokeWidth == path.brushThickness
+            mDrawPaint!!.strokeWidth = path.brushThickness
             mDrawPaint!!.color = path!!.color
             canvas?.drawPath(path, mDrawPaint!!)
         }
@@ -70,7 +80,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
                 mDrawPath!!.brushThickness = mBrushSize
 
                 mDrawPath!!.reset()
-                mDrawPath!!.moveTo(touchX!!, touchY!!)
+                mDrawPath!!.moveTo(touchX!!, touchY!!) // Set the beginning of the next contour to the point (x,y).
             }
             MotionEvent.ACTION_MOVE -> {
                 if (touchX != null) {
@@ -81,7 +91,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
             }
             MotionEvent.ACTION_UP -> {
-                mPaths.add(mDrawPath!!)
+                mPaths.add(mDrawPath!!) //Add when to stroke is drawn to canvas and added in the path arraylist
                 mDrawPath = CustomPath(color, mBrushSize)
 
             }
@@ -94,13 +104,24 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     }
 
+    /**
+     * This method is called when either the brush or the eraser
+     * sizes are to be changed. This method sets the brush/eraser
+     * sizes to the new values depending on user selection.
+     */
     fun setSizeForBrush(newSize: Float) {
         // to automatically adjust the size according to the size of the screen
         mBrushSize = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, newSize,
             resources.displayMetrics
         )
-        mDrawPaint!!.strokeWidth = mBrushSize
+        mDrawPaint?.strokeWidth = mBrushSize
+    }
+
+    fun setColor(newColor : String)
+    {
+        color = Color.parseColor(newColor)
+        mDrawPaint?.color = color
     }
 
     // internal means it is available inside this module (package private)
