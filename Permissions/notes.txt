@@ -1,0 +1,1 @@
+Add <uses-permissions> tag is android manifest
