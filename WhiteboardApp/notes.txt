@@ -1,0 +1,4 @@
+FrameLayout -> used to handle multiple views placed on each other.
+In this case the ImageView and the DrawingView are to be stacked on each other therefore the use of FrameLayout is preferred
+
+The hazy color on the screen appears because the drawing view is assigned a grayish color.
