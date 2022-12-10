@@ -1,0 +1,14 @@
+Difference between snackBars and toast:
+Toast ->
+- Added in API 1
+- Activity is not required
+- Cannot be dismissed by swiping
+
+SnackBars ->
+- Added in API 23
+- Can be shown inside an activity of application
+- It can be dismissed by swiping
+- Good for showing warning/info types messages to user that needs attention
+
+To show a snackBar ->
+            Snackbar.make(view, "You clicked image button", Snackbar.LENGTH_LONG).show()
