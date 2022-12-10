@@ -1,1 +1,30 @@
 Add <uses-permissions> tag is android manifest
+Create a object of ActivityResultLauncher  in the file ->
+             private val cameraResultLauncher: ActivityResultLauncher<String> =
+                    registerForActivityResult(ActivityResultContracts.RequestPermission())
+                    {
+                        isGranted ->
+                            if (isGranted) {
+                                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this, "Permission Not Granted", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+Now we require a button to launch the button so that it can ask for permission ->
+            btnCameraPermission.setOnClickListener {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                            && shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)
+                        ) {
+                            // this is a alert dialog custom
+                            showRationaleDialog(
+                                " Permission Demo requires camera access",
+                                "Camera cannot be used because Camera access is denied"
+                            )
+                        } else {
+                            // Directly ask for the permission.
+                            // The registered ActivityResultCallback gets the result of this request.
+                            cameraResultLauncher.launch(
+                                Manifest.permission.CAMERA
+                            )
+                        }
+                    }
