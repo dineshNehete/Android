@@ -172,6 +172,16 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/ic_undo"
             android:scaleType="fitXY" />
+        <ImageButton
+            android:id="@+id/ib_redo"
+            android:scaleX="-1"
+            android:scaleY="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_undo"
+            android:scaleType="fitXY" />
 
     </LinearLayout>
     <!-- scaleType to make the image fit according to the size of the screen-->

@@ -93,6 +93,11 @@ class MainActivity : AppCompatActivity() {
             drawingView?.onClickUndo()
         }
 
+        val ibRedo : ImageButton = findViewById(R.id.ib_redo)
+        ibRedo.setOnClickListener {
+            drawingView?.onClickRedo()
+        }
+
     }
 
     private fun requestStoragePermission() {

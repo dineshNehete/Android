@@ -37,6 +37,13 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         }
     }
 
+    fun onClickRedo() {
+        if (mUndoPaths.size > 0) {
+            mPaths.add(mUndoPaths.removeAt(mUndoPaths.size - 1))
+            invalidate() // as we removed some paths we need to redraw the screen and therefore call the onDraw method, but instead we call the invalidate() method which internally calls the onDraw method
+        }
+    }
+
     private fun setUpDrawing() {
         mDrawPaint = Paint()
         mDrawPath = CustomPath(color, mBrushSize)
