@@ -14,7 +14,8 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var mDrawPath: CustomPath? = null
     private var mCanvasBitmap: Bitmap? =
         null // bitmap is rectangle of pixels, it is used to work with images defined by pixel data
-    private var mDrawPaint: Paint? = null // The Paint class holds the style and color information about how to draw geometries, text and bitmaps
+    private var mDrawPaint: Paint? =
+        null // The Paint class holds the style and color information about how to draw geometries, text and bitmaps
     private var mCanvasPaint: Paint? = null
     private var mBrushSize: Float = 0.toFloat()
     private var color = Color.BLACK
@@ -22,10 +23,18 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     // to make the lines persist on the screen
     private val mPaths = ArrayList<CustomPath>()
+    private val mUndoPaths = ArrayList<CustomPath>()
 
 
     init {
         setUpDrawing()
+    }
+
+    fun onClickUndo() {
+        if (mPaths.size > 0) {
+            mUndoPaths.add(mPaths.removeAt(mPaths.size - 1))
+            invalidate() // as we removed some paths we need to redraw the screen and therefore call the onDraw method, but instead we call the invalidate() method which internally calls the onDraw method
+        }
     }
 
     private fun setUpDrawing() {
@@ -64,7 +73,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             canvas?.drawPath(path, mDrawPaint!!)
         }
         if (!mDrawPath!!.isEmpty) {
-            mDrawPaint!!.strokeWidth == mDrawPath!!.brushThickness
+            mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness
             mDrawPaint!!.color = mDrawPath!!.color
             canvas?.drawPath(mDrawPath!!, mDrawPaint!!)
         }
@@ -80,7 +89,10 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
                 mDrawPath!!.brushThickness = mBrushSize
 
                 mDrawPath!!.reset()
-                mDrawPath!!.moveTo(touchX!!, touchY!!) // Set the beginning of the next contour to the point (x,y).
+                mDrawPath!!.moveTo(
+                    touchX!!,
+                    touchY!!
+                ) // Set the beginning of the next contour to the point (x,y).
             }
             MotionEvent.ACTION_MOVE -> {
                 if (touchX != null) {
@@ -118,8 +130,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         mDrawPaint?.strokeWidth = mBrushSize
     }
 
-    fun setColor(newColor : String)
-    {
+    fun setColor(newColor: String) {
         color = Color.parseColor(newColor)
         mDrawPaint?.color = color
     }

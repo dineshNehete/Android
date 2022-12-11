@@ -2,3 +2,21 @@ FrameLayout -> used to handle multiple views placed on each other.
 In this case the ImageView and the DrawingView are to be stacked on each other therefore the use of FrameLayout is preferred
 
 The hazy color on the screen appears because the drawing view is assigned a grayish color.
+
+  /*
+* Intents can be used not only to start a new activity but also to go and use another app
+* You get a URI from your local device and thats why while setting the bavkground you need to use setImageUri() method and not setImageDrawable, URI is similar to a path of the file in the local device
+                     * */
+             val pickIntent: Intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+              val openGalleryLaucher: ActivityResultLauncher<Intent> =
+                     registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
+                         fun(result: ActivityResult) {
+                             if (result.resultCode == RESULT_OK && result.data != null) {
+                                 val imageBackground: ImageView = findViewById(R.id.iv_background)
+                                 // we are not copying the image, we are just setting it depending upon where it is located in your phone
+                                 imageBackground.setImageURI(result.data?.data)
+                             }
+                         })
+And if permission is granted then launch the launcher. ->  openGalleryLaucher.launch(pickIntent)
