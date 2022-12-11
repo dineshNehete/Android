@@ -1,11 +1,13 @@
 package com.example.customdialog
 
+import android.app.Dialog
 import android.content.DialogInterface
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +27,27 @@ class MainActivity : AppCompatActivity() {
             alertDialogFunction()
         }
     }
+
+    private fun customDialogFunction() {
+        val customDialog = Dialog(this)
+        /*Set the screen content from a layout resource.
+    The resource will be inflated, adding all top-level views to the screen.*/
+        customDialog.setContentView(R.layout.dialog_custom)
+
+        customDialog.findViewById<TextView>(R.id.tv_submit).setOnClickListener {
+            Toast.makeText(applicationContext, "clicked submit", Toast.LENGTH_LONG).show()
+            customDialog.dismiss() // Dialog will be dismissed
+        }
+
+        customDialog.findViewById<TextView>(R.id.tv_cancel).setOnClickListener {
+            Toast.makeText(applicationContext, "clicked cancel", Toast.LENGTH_LONG).show()
+            customDialog.dismiss()
+        }
+        //Start the dialog and display it on screen.
+        customDialog.show()
+
+    }
+
 
     private fun alertDialogFunction() {
         val builder = AlertDialog.Builder(this)
