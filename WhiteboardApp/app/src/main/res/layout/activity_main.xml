@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
+
         android:background="@drawable/background_drawing_view_layout"
         android:padding="1dp"
         app:layout_constraintBottom_toTopOf="@+id/ll_paint_colors"
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/image" />
+            android:tools="@drawable/image" />
 
         <com.example.whiteboardapp.DrawingView
             android:id="@+id/drawing_view"
@@ -176,6 +177,16 @@
             android:id="@+id/ib_redo"
             android:scaleX="-1"
             android:scaleY="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/ic_undo"
+            android:scaleType="fitXY" />
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:scaleX="-1"
+            android:scaleY="-1"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="5dp"

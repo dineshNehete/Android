@@ -20,3 +20,12 @@ The hazy color on the screen appears because the drawing view is assigned a gray
                              }
                          })
 And if permission is granted then launch the launcher. ->  openGalleryLaucher.launch(pickIntent)
+
+
+/*MediaScannerConnection provides a way for applications to pass a
+        newly created or downloaded media file to the media scanner service.
+        The media scanner service will read metadata from the file and add
+        the file to the media content provider.
+        The MediaScannerConnectionClient provides an interface for the
+        media scanner service to return the Uri for a newly scanned file
+        to the client of the MediaScannerConnection class.*/
