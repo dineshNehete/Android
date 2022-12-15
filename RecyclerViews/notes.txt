@@ -1,0 +1,15 @@
+Recycler view can be thought as the combination of ListView and GridView. In recycler view there are features that separate your code into maintainable components even as they enforce memory efficient design patterns.
+It uses adapter to act as data source, however we need to create ViewHolders to keep references in memory
+To provide a new view recycler view either creates a new ViewHolder object to inflate the layout and hold the references or it recycles one from existing stack.
+Another perk is -> they come with default animations, we can also create custom animations and apply
+
+Layout Manager ->
+This object positions the recycler view's items and tells it to recycle items that have transitioned off the screen.
+So if a list item is not visible anymore, it's off screen already.
+Then at one point you need to release the memory and you shouldn't do that directly.
+Maybe the user wants to scroll back.
+All right, so maybe he wants to see whatever he scrolled away.
+So it doesn't have to be done directly, but it's something that recycle used or just recycle view class
+and layout manager handle themselves.
+
+https://guides.codepath.com/android/using-the-recyclerview
