@@ -13,3 +13,21 @@ So it doesn't have to be done directly, but it's something that recycle used or 
 and layout manager handle themselves.
 
 https://guides.codepath.com/android/using-the-recyclerview
+
+Setup ->
+ - Recycler View
+ - Item layout
+ - View Adapter
+
+Steps :
+1. Create the recyclerview_item.xml file
+2. Create the Adapter and inherit from
+3. RecyclerView.Adapter<MainAdapter.MainViewHolder>() where MainViewHolder is actually the inner class responsible for the recycling and improving the efficiency. It actually describes an item view and metadata about its place.
+Define the function in view holder which will assign the respective values to the view.
+4. Implement the three methods of the Adapter.
+The " override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder" method is responsible to create a view object and create a holder to store this view object
+The " override fun onBindViewHolder(holder: MainViewHolder, position: Int)" is responsible to bind the data in views, based on the position it binds the data into view and then shows in the app.
+The "override fun getItemCount(): Int" returns the size of the list.
+5. In main class create an instance of the Adapter and set the adapter via binding?.rv?.adapter = MainAdapter(taskList)
+6. Set the layout manager of the recycler view.
+7. If you are using view binding do not forget to destroy the object in onDestroy method
