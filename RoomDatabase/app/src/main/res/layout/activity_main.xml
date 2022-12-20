@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
 
-    <TextView
+        <TextView
         app:layout_constraintBottom_toBottomOf="@id/etName"
         app:layout_constraintTop_toTopOf="@id/etName"
         app:layout_constraintStart_toStartOf="parent"
