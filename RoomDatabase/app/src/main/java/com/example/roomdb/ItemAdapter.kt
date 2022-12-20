@@ -10,8 +10,8 @@ import com.example.roomdb.databinding.ItemsRowBinding
 
 class ItemAdapter(
     private val items: ArrayList<EmployeeEntity>,
-    private val updateListener: (id: Int) -> Unit,
-    private val deleteListener: (id: Int) -> Unit
+//    private val updateListener: (id: Int) -> Unit,
+//    private val deleteListener: (id: Int) -> Unit
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(binding: ItemsRowBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -55,10 +55,10 @@ class ItemAdapter(
             )
         }
         holder.ivEdit.setOnClickListener {
-            updateListener.invoke(item.id)
+//            updateListener.invoke(item.id)
         }
         holder.ivDelete.setOnClickListener {
-            updateListener.invoke(item.id)
+//            updateListener.invoke(item.id)
         }
     }
 
