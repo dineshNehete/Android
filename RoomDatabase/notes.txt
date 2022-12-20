@@ -1,0 +1,21 @@
+
+The SQLite database is provided in Android to make saving data locally possible, but it involves quite a number of boilerplate code lines.So Room is a jetpack library, which was created as a wrapper around SQLite
+It makes it easy to write complex SQL statements to query the data you need without having to go through every single column.
+
+Components Of Room ->
+
+# Entity ( analogous to object in programming )
+
+# Dao(Data access object)
+ - Data Access Objects are the main classes where you define your database interactions. They can include a variety of query         methods.
+ - The class marked with @Dao should either be an interface or an abstract class. At compile time, Room will generate an             implementation of this class when it is referenced by a Database.
+
+# Database
+ - This class is annotated with @ database and extends the room database.
+ - It contains the database setup with the entity and serves as the main access point to the database access point.
+
+
+
+
+ TODO:
+ 1. Add the required dependencies and the "kapt" (kotlin annotation processing tool)
