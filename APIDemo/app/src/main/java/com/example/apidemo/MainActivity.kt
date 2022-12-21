@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 val url = URL("https://run.mocky.io/v3/3fc49fc4-e540-4e2f-86d7-5341964a6b05")
                 connection = url.openConnection() as HttpURLConnection?
                 connection!!.doInput = true
-                connection!!.doOutput = true
+                connection.doOutput = true
 
                 val httpResult: Int = connection.responseCode
 
@@ -89,8 +90,23 @@ class MainActivity : AppCompatActivity() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             cancelProgesssDialog()
+
+
             if (result != null) {
                 Log.i("JSON RESULT : ", result)
+                // processing the json objects
+                val jsonObject = JSONObject(result)
+                val name = jsonObject.optString("name")
+                Log.i("Name", name)
+                val dept = jsonObject.optString("dept")
+                Log.i("Dept", dept)
+
+
+                // if we want to grab an array
+//                val dataListArray = jsonObject.optJSONArray("nameOfArray")
+
+                // nested fields
+//                val name2 = jsonObject.optJSONObject("profile").optString("name")
             }
         }
 
