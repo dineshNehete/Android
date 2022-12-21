@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.gson.Gson
 import org.json.JSONObject
 import java.io.*
 import java.net.HttpURLConnection
@@ -18,10 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CallAPILoginAsync().execute()
+        CallAPILoginAsync("dinesh", "123456").execute()
     }
 
-    private inner class CallAPILoginAsync() : AsyncTask<Any, Void, String>() {
+    private inner class CallAPILoginAsync(val username: String, val password: String) :
+        AsyncTask<Any, Void, String>() {
+
+
         private lateinit var customProgressDialog: Dialog
 
         /**
@@ -41,6 +45,26 @@ class MainActivity : AppCompatActivity() {
                 connection = url.openConnection() as HttpURLConnection?
                 connection!!.doInput = true
                 connection.doOutput = true
+
+                // to follow any redirects
+                connection.instanceFollowRedirects = false
+
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.setRequestProperty("charset", "utf-8")
+                connection.setRequestProperty("Accept", "application/json")
+
+                connection.useCaches = false
+
+                val writeDataOutputStream = DataOutputStream(connection.outputStream)
+                val jsonReq = JSONObject()
+                jsonReq.put("name", username)
+                jsonReq.put("password", password)
+
+                writeDataOutputStream.writeBytes(jsonReq.toString())
+                writeDataOutputStream.flush()
+                writeDataOutputStream.close()
+
 
                 val httpResult: Int = connection.responseCode
 
@@ -95,12 +119,15 @@ class MainActivity : AppCompatActivity() {
             if (result != null) {
                 Log.i("JSON RESULT : ", result)
                 // processing the json objects
-                val jsonObject = JSONObject(result)
-                val name = jsonObject.optString("name")
-                Log.i("Name", name)
-                val dept = jsonObject.optString("dept")
-                Log.i("Dept", dept)
+//                val jsonObject = JSONObject(result)
+//                val name = jsonObject.optString("name")
+//                Log.i("Name", name)
+//                val dept = jsonObject.optString("dept")
+//                Log.i("Dept", dept)
 
+                val responseData = Gson().fromJson(result, ResponseData::class.java)
+                Log.i("name", responseData.name)
+                Log.i("dept", responseData.dept)
 
                 // if we want to grab an array
 //                val dataListArray = jsonObject.optJSONArray("nameOfArray")
