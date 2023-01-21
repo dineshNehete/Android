@@ -31,3 +31,19 @@ The "override fun getItemCount(): Int" returns the size of the list.
 5. In main class create an instance of the Adapter and set the adapter via binding?.rv?.adapter = MainAdapter(taskList)
 6. Set the layout manager of the recycler view.
 7. If you are using view binding do not forget to destroy the object in onDestroy method
+
+
+
+To add the itemClicks :
+Can be done by implementing an interface of OnClickListener or by using the invoke method :
+ Steps : 
+  1. lateinit var onItemClick: ((CategoryMeals) -> Unit)
+  2. This in the onBindViewHolder method 
+          holder.itemView.setOnClickListener {
+                    onItemClick.invoke(mealsList[position])
+                }
+  3. Now the method can be defined as : 
+          popularItemAdapter.onItemClick = { item ->
+            // content .....
+        }
+     // This should take place where the adapter is already initialized.
